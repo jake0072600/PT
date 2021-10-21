@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" href="./js/lib/jquery-ui/jquery-ui.min.css">
+    <style>
+
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font: inherit;
+            font-size: 100%;
+            vertical-align: baseline;
+            user-select: none;
+        }
+        h1 {line-height:40px;}
+        html {
+            line-height: 1;
+        }
+        ol, ul {
+            list-style: none;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        caption, th, td {
+            text-align: left;
+            font-weight: normal;
+            vertical-align: middle;
+        }
+        q, blockquote {
+            quotes: none;
+        }
+        q:before, q:after, blockquote:before, blockquote:after {
+            content: "";
+            content: none;
+        }
+        a img {
+            border: none;
+        }
+        article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+            display: block;
+        }
+
+        body{
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .car{
+            width: 375px;
+            position: relative;
+            margin: 0 auto;
+        }
+        .car-item{
+            position: relative;
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+        }
+        .ci-title{
+            position: relative;
+            width: 30%;
+            display: block;
+            float: left;
+            font-size: 14px;
+            text-align: center;
+        }
+        .car-item input{
+            text-align: center;
+        }
+        .car .car-item:nth-of-type(even){
+            background-color: #eee;
+        }
+        .ci-value{
+            position: relative;
+            float: left;
+            width: 70%;
+        }
+
+        #age{
+            top: 8px;
+            position: relative;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="car">
+        <div class="car-item">
+            <span class="ci-title">规则版本</span>
+            <select value="7">
+                <option value="7">7版规则</option>
+            </select>
+        </div>
+        <div class="car-item">
+            <span class="ci-title">力量(STR)</span>
+            <span class="ci-value">
+                <input id="str" type="number" step="5" min="0" max="100">
+            </span>
+        </div>
+        <div class="car-item">
+            <span class="ci-title">体质(CON)</span>
+            <span class="ci-value">
+                <input id="con" type="number" step="5" min="0" max="100">
+            </span>
+        </div>
+        <div class="car-item">
+            <span class="ci-title">体质(SIZ)</span>
+            <span class="ci-value">
+                <input id="siz" type="number" step="5" min="0" max="100">
+            </span>
+        </div>
+        <div class="car-item">
+            <span class="ci-title">智力(INT)</span>
+            <span class="ci-value">
+                <input id="int" type="number" step="5" min="0" max="100">
+            </span>
+        </div>
+        <div class="car-item">
+            <span class="ci-title">意志(POW)</span>
+            <span class="ci-value">
+                <input id="pow" type="number" step="5" min="0" max="100">
+            </span>
+        </div>
+        <div class="car-item">
+            <span class="ci-title">敏捷(DEX)</span>
+            <span class="ci-value">
+                <input id="dex" type="number" step="5" min="0" max="100">
+            </span>
+        </div>
+        <div class="car-item">
+            <span class="ci-title">外貌(APP)</span>
+            <span class="ci-value">
+                <input id="app" type="number" step="5" min="0" max="100">
+            </span>
+        </div>
+        <div class="car-item">
+            <span class="ci-title">教育(EDU)</span>
+            <span class="ci-value">
+                <input id="edu" type="number" step="5" min="0" max="100">
+            </span>
+        </div>
+        <div class="car-item">
+            <span class="ci-title">幸运(LUCK)</span>
+            <span class="ci-value">
+                <input id="luck" type="number" step="5" min="0" max="100">
+            </span>
+        </div>
+        <div class="car-item">
+            <span class="ci-title">年龄(AGE)</span>
+            <span class="ci-value">
+                <div id="age"></div>
+            </span>
+        </div>
+    </div>
+
+    <script src="./js/lib/jquery-3.5.1.min.js"></script>
+    <script src="./js/lib/jquery-ui/jquery-ui.min.js"></script>
+    <script src="./js/view/COCCar.js"></script>
+    <script src="./js/coc/coc.js"></script>
+    <script>
+
+
+
+    </script>
+</body>
+</html>
