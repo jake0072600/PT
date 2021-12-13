@@ -37,5 +37,9 @@ let COC=(()=>{
         }
     }
 
+    return{
+        Car:Car
+    }
+
 
 })()
