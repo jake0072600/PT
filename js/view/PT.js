@@ -266,17 +266,20 @@ let PT=(()=>{
             if(!this._getQueryVariable("bd")) return;
 
             let vd6 = this.value["D6_6"];
-            let l1=Math.ceil(vd6.length/3*2);
+            let l1=Math.ceil(vd6.length/3*1);
 
             for(let i=0;i<l1;i++){
-                vd6.push({v:6,r:vd6[5].r.clone()})
+                vd6.push({v:6,r:vd6[5].r.clone()});
+                vd6.push({v:5,r:vd6[4].r.clone()});
             }
 
             let vd10_2=this.value["D10-0_8_2"];
-            let l2=Math.ceil(vd10_2.length/3*2);
+            let l2=Math.ceil(vd10_2.length/3*1);
 
             for(let i=0;i<l2;i++){
-                vd10_2.push({v:0,r:vd10_2[0].r.clone()})
+                vd10_2.push({v:0,r:vd10_2[0].r.clone()});
+                vd10_2.push({v:1,r:vd10_2[1].r.clone()});
+                vd10_2.push({v:2,r:vd10_2[2].r.clone()});
             }
 
             vd6.shuffle();
@@ -405,7 +408,8 @@ let PT=(()=>{
 
 
                         //let index=Math.floor(Math.random()*(+status.nowName.split("_")[1]))
-                        let index=Math.floor(Math.random()*this.value[status.nowName].length);
+                        //let index=Math.floor(Math.random()*this.value[status.nowName].length);
+                        let index=this.random(this.value[status.nowName].length)-1;
                         let e=this.value[status.nowName][index];
                         console.log(index);
                         status.t = new TWEEN.Tween(status.nowObj.rotation,this.tg).to({x:e.r.x,y:e.r.y,z:e.r.z},100).start();
@@ -440,6 +444,16 @@ let PT=(()=>{
 
             if(this.bg)
                 this.bg.update();
+        }
+
+        rnd(seed){
+            seed = ( seed * 9301 + 49297 ) % 233280;
+            return seed / ( 233280.0 );
+        }
+        random(num){
+            let today = new Date();
+            let seed = today.getTime();
+            return Math.ceil( this.rnd( seed ) * num );
         }
 
 
