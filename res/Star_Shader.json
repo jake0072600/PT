@@ -1,0 +1,56 @@
+{
+  "id": 3115,
+  "name": "Star Shader",
+  "fragment": "precision highp float;\nprecision highp int;\nuniform float distortion;\nuniform float time;\nuniform float speed;\nuniform float swirl;\nuniform vec3 baseColor;\nuniform float red;\nuniform float green;\nuniform float blue;\nconst int iterations = 50;\nconst int swirlIterations = 6;\nvarying vec2 vUv;\nvec4 Universe_Shader1552158184875_68_main() \n                                                                                                                                                        {\n                                                                                                                                                            vec4 Universe_Shader1552158184875_68_gl_FragColor = vec4(0.0);\n                                                                                                                                                            vec2 uv = vUv - 0.5;\n                                                                                                                                                            float t = speed * time * 0.1 + ((0.25 + 0.05 * sin(time * speed * 0.1)) / (length(uv.xy) + (1.0 - swirl))) * 2.2;\n                                                                                                                                                            float sine = sin(t * distortion);\n                                                                                                                                                            float cose = cos(t * 1.0 / distortion);\n                                                                                                                                                            mat2 matrix = mat2(-cose, sine, sine, cose);\n                                                                                                                                                            float c;\n                                                                                                                                                            float v1 = 0.0;\n                                                                                                                                                            float v2 = 0.0;\n                                                                                                                                                            vec3 uv3 = vec3(uv, 0.0);\n                                                                                                                                                            for (int i = 0;\n i < iterations; i++) \n                                                                                                                                                            {\n                                                                                                                                                                float s = float(i) * 0.035;\n                                                                                                                                                                vec3 p = s * uv3;\n                                                                                                                                                                p.xy *= matrix;\n                                                                                                                                                                p += vec3(.22, .3, s - 1.5 - sin(t * 0.13) * 0.1);\n                                                                                                                                                                for (int i = 0;\n i < swirlIterations; i++) \n                                                                                                                                                                {\n                                                                                                                                                                    p = abs(p) / dot(p, p) - 0.659;\n                                                                                                                                                                }\n                                                                                                                                                                v1 += dot(p, p) * 0.0015 * green * (1.8 + sin(length(uv.xy * 13.0) + 0.5 - t * 0.2));\n                                                                                                                                                                v2 += dot(p, p) * 0.0015 * blue * (1.5 + sin(length(uv.xy * 13.5) + 2.2 - t * 0.3));\n                                                                                                                                                                c = length(p.xy * 0.5) * 0.35 * red;\n                                                                                                                                                            }\n                                                                                                                                                            float len = length(uv);\n                                                                                                                                                            v1 *= smoothstep(0.7, 0.0, len);\n                                                                                                                                                            v2 *= smoothstep(0.6, 0.0, len);\n                                                                                                                                                            float r = clamp(c, 0.0, 1.0);\n                                                                                                                                                            float g = clamp((v1 + c) * 0.25, 0.0, 1.0);\n                                                                                                                                                            float b = clamp(v2, 0.0, 1.0);\n                                                                                                                                                            vec3 col = baseColor * vec3(r, g, b) + smoothstep(0.15, 0.0, len) * 0.9;\n                                                                                                                                                            Universe_Shader1552158184875_68_gl_FragColor = vec4(col, 1.0);\n                                                                                                                                                            return Universe_Shader1552158184875_68_gl_FragColor *= 1.0;\n                                                                                                                                                        }\nvoid main() \n                                                                                                                                                        {\n                                                                                                                                                            gl_FragColor = Universe_Shader1552158184875_68_main();                                                                                                                                                        }\n",
+  "vertex": "precision highp float;\nprecision highp int;\nuniform mat4 modelMatrix;\nuniform mat4 modelViewMatrix;\nuniform mat4 projectionMatrix;\nattribute vec3 position;\nattribute vec2 uv;\nvarying vec2 vUv;\nvec4 Universe_Shader1552158184875_68_main() \n                                                                                                                                                        {\n                                                                                                                                                            vec4 Universe_Shader1552158184875_68_gl_Position = vec4(0.0);\n                                                                                                                                                            vUv = uv;\n                                                                                                                                                            Universe_Shader1552158184875_68_gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);\n                                                                                                                                                            return Universe_Shader1552158184875_68_gl_Position *= 1.0;\n                                                                                                                                                        }\nvoid main() \n                                                                                                                                                        {\n                                                                                                                                                            gl_Position = Universe_Shader1552158184875_68_main();                                                                                                                                                        }\n",
+  "uniforms": {
+    "time": {
+      "type": "f",
+      "glslType": "float"
+    },
+    "speed": {
+      "value": "0.80907226",
+      "type": "f",
+      "glslType": "float"
+    },
+    "distortion": {
+      "value": "1",
+      "type": "f",
+      "glslType": "float"
+    },
+    "swirl": {
+      "value": "0.95042422",
+      "type": "f",
+      "glslType": "float"
+    },
+    "baseColor": {
+      "value": {
+        "r": 0.9019607843137255,
+        "g": 0.9254901960784314,
+        "b": 0.9137254901960784
+      },
+      "type": "c",
+      "glslType": "vec3"
+    },
+    "green": {
+      "value": "4.53557367",
+      "type": "f",
+      "glslType": "float"
+    },
+    "blue": {
+      "value": "3.64831143",
+      "type": "f",
+      "glslType": "float"
+    },
+    "red": {
+      "value": "1.12848666",
+      "type": "f",
+      "glslType": "float"
+    }
+  },
+  "url": "http://shaderfrog.com/app/view/3115",
+  "user": {
+    "username": "melsov",
+    "url": "http://shaderfrog.com/app/profile/andrewray"
+  }
+}
