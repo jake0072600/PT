@@ -16,8 +16,9 @@ let PT=(()=>{
         return array;
     }
 
-    class PT{
+    class PT extends THREE.EventDispatcher{
         constructor(bs,bl,url,$loading) {
+            super();
 
             this.bs=bs;
             this.bl=bl;
@@ -153,7 +154,6 @@ let PT=(()=>{
                     {v:19,r:new THREE.Euler( 1.9891023167129147, 0.49423785065652887, -2.7574387296667515)},
                     {v:20,r:new THREE.Euler( 0.7045497216648711, 0.6998047011253735, 0.4143115409050701)},
                 ]
-
             }
 
             this.tg=new TWEEN.Group();
@@ -172,7 +172,7 @@ let PT=(()=>{
                 this._init();
                 pt=this;
 
-
+                this.dispatchEvent({type:"loaded",message:""});
             })
         }
 
@@ -214,6 +214,7 @@ let PT=(()=>{
         _init(){
             this._initBasic();
             this._initBackDoor();
+            //this._initPass();
         }
 
         _initBasic(){
@@ -240,7 +241,7 @@ let PT=(()=>{
             this.lg=lg;
             bs.o3d.scene.add(lg);
 
-            bs.o3d.camera.position.set(0,10,0);
+            bs.o3d.camera.position.set(0.85,10,0);
             bs.o3d.camera.rotation.set(-Math.PI/2,0,Math.PI/2);
             //bs.o3d.camera.lookAt(new THREE.Vector3());
             bs.o3d.controls.enabled=false;
@@ -301,6 +302,25 @@ let PT=(()=>{
             vd10_2.sort(()=>{
                 return 0.5-Math.random()
             });*/
+        }
+
+        _initPass(){
+            let aip=new THREE.AfterimagePass();
+            aip.uniforms.damp.value=0.5;
+            //this.bs.setPass(aip);
+
+            let params = {
+                exposure: 1,
+                bloomStrength: 1.5,
+                bloomThreshold: 0,
+                bloomRadius: 0
+            };
+            let bloomPass = new THREE.UnrealBloomPass( new THREE.Vector2( bs.width, bs.height ), 1.5, 0, 0 );
+            bloomPass.threshold = params.bloomThreshold;
+            bloomPass.strength = params.bloomStrength;
+            bloomPass.radius = params.bloomRadius;
+
+            bs.addPass(bloomPass);
         }
 
         setBG(name="star1"){

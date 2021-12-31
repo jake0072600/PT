@@ -399,6 +399,33 @@
 <!--    <div class="d-bg" onclick="onBgClick()">
         BG
     </div>-->
+    <script type="x-shader/x-vertex" id="vertexshader">
+
+			varying vec2 vUv;
+
+			void main() {
+
+				vUv = uv;
+
+				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+			}
+
+		</script>
+    <script type="x-shader/x-fragment" id="fragmentshader">
+
+			uniform sampler2D baseTexture;
+			uniform sampler2D bloomTexture;
+
+			varying vec2 vUv;
+
+			void main() {
+
+				gl_FragColor = ( texture2D( baseTexture, vUv ) + vec4( 1.0 ) * texture2D( bloomTexture, vUv ) );
+
+			}
+
+	</script>
 
     <script src="./js/lib/inflate.min.js"></script>
 <!--    <script src="./js/lib/iscroll.js"></script>-->
@@ -455,6 +482,11 @@
     <script src="./js/view/PT.js"></script>
 
     <script>
+        const ENTIRE_SCENE = 0, BLOOM_SCENE = 1;
+
+        const bloomLayer = new THREE.Layers();
+        bloomLayer.set( BLOOM_SCENE );
+        const darkMaterial = new THREE.MeshBasicMaterial( { color: "black" } );
 
         let $loading=$(".spinner-box");
 
@@ -480,6 +512,102 @@
         let bs=new BasicStage.BasicStage({element:document.getElementById("container")});
 
         let pt = new PT.PT(bs,bl,"./res/dice1.glb",$loading);
+        pt.addEventListener("loaded",()=>{
+            initView();
+        });
+
+        let bloomPass,finalComposer;
+        let materials={};
+
+        function initView(){
+            bs.o3d.composer.renderToScreen = false;
+
+            const renderScene = new THREE.RenderPass( bs.o3d.scene, bs.o3d.camera );
+            let params = {
+                exposure: 1,
+                bloomStrength: 1.6,
+                bloomThreshold: 0,
+                bloomRadius: 0.25
+            };
+            bloomPass = new THREE.UnrealBloomPass( new THREE.Vector2( bs.width, bs.height ), 1.5, 0, 0 );
+            bloomPass.threshold = params.bloomThreshold;
+            bloomPass.strength = params.bloomStrength;
+            bloomPass.radius = params.bloomRadius;
+
+            let finalPass = new THREE.ShaderPass(
+                new THREE.ShaderMaterial( {
+                    uniforms: {
+                        baseTexture: { value: null },
+                        bloomTexture: { value: bs.o3d.composer.renderTarget2.texture }
+                    },
+                    vertexShader: document.getElementById( 'vertexshader' ).textContent,
+                    fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
+                    defines: {}
+                } ), "baseTexture"
+            );
+            finalPass.needsSwap = true;
+
+            finalComposer = new THREE.EffectComposer( bs.o3d.renderer );
+            finalComposer.addPass( renderScene );
+            finalComposer.addPass( finalPass );
+
+            bs.o3d.renderer.toneMapping = THREE.ReinhardToneMapping;
+            bs.o3d.renderer.toneMappingExposure = Math.pow( params.exposure, 4.0 );
+
+            bs.otherRender=myRender;
+
+            bs.o3d.scene.children[1].children[0].children[0].children.map((obj)=>{
+                obj.children[0].layers.enable(BLOOM_SCENE);
+            })
+
+            bs.addPass(bloomPass);
+
+            var runtime = new ShaderRuntime();
+            var clock = new THREE.Clock();
+            runtime.registerCamera( bs.o3d.camera );
+
+            runtime.load("./res/Star_Shader2.json",(shaderData)=>{
+                let mesh=new THREE.Mesh(new THREE.BoxGeometry(60,64,64),new THREE.MeshBasicMaterial({color:0xff0000}));
+                mesh.material=runtime.get(shaderData.name);
+                mesh.material.side=THREE.DoubleSide;
+                //mesh.rotation.x=Math.PI/2;
+                bs.addModel(mesh);
+            })
+
+            bs.addEventListener("animate",()=>{
+                runtime.updateShaders( clock.getElapsedTime() );
+            })
+        }
+
+        function renderBloom() {
+            let scene=bs.o3d.scene;
+            let bloomComposer=bs.o3d.composer;
+
+            scene.traverse((obj)=>{
+                //let materials=this.materials;
+                if ( obj.isMesh && bloomLayer.test( obj.layers ) === false ) {
+
+                    materials[ obj.uuid ] = obj.material;
+                    obj.material = darkMaterial;
+
+                }
+            });
+            bloomComposer.render();
+            scene.traverse( (obj)=>{
+                //let materials=this.materials;
+                if ( materials[ obj.uuid ] ) {
+                    obj.material = materials[ obj.uuid ];
+                    delete materials[ obj.uuid ];
+                }
+            } );
+        }
+
+        function myRender(){
+            renderBloom();
+            finalComposer.render();
+        }
+
+
 
 
         function onGoClick(){

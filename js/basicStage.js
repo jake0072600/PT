@@ -87,6 +87,8 @@ let BasicStage=(function () {
 
             this.enabled = true;
 
+            this.otherRender=null;//预留额外渲染方法
+
             this.o3d = {
                 renderer:null,
                 camera:null,
@@ -403,11 +405,15 @@ let BasicStage=(function () {
                     }
                         //o3d.mixer.update(delta);
 
-                    if(this.normalRender){
-                        renderer.render( o3d.scene, o3d.camera );
+                    if(this.otherRender){
+                        this.otherRender()
+                    }else{
+                        if(this.normalRender){
+                            renderer.render( o3d.scene, o3d.camera );
+                        }
+                        else
+                            composer.render();
                     }
-                    else
-                        composer.render();
 
                     this.dispatchEvent({type:"afterRender",message:""});
                 }
