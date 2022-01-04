@@ -165,7 +165,8 @@ let PT=(()=>{
                 a1:false,
                 a2:false,
                 life:0,
-                maxLife:1.5
+                maxLife:1.5,
+                lastD10_2:null,
             };
 
             this._load(()=>{
@@ -442,6 +443,15 @@ let PT=(()=>{
                         let index=this.random(this.value[status.nowName].length)-1;
                         let e=this.value[status.nowName][index];
                         console.log(index);
+                        if(status.nowName=="D10-0_8_2"){
+                            status.lastD10_2=index;
+                        }
+                        //在进行了几局COC游戏后我们一致认为，用电子骰投出00大失败，这何止是愚蠢，这简直就是愚蠢
+                        if(status.nowName=="D10-0_8_1"){
+                            if(status.lastD10_2===0){
+                                index=index<5?index+1:index;
+                            }
+                        }
                         status.t = new TWEEN.Tween(status.nowObj.rotation,this.tg).to({x:e.r.x,y:e.r.y,z:e.r.z},100).start();
                         status.t.onComplete(()=>{
                             this.tg.remove(status.t);
@@ -507,9 +517,7 @@ let PT=(()=>{
         requestAnimationFrame(animate);
 
         if(pt){
-
             pt._update(time);
-
         }
 
     }
