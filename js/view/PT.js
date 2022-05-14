@@ -16,8 +16,9 @@ let PT=(()=>{
         return array;
     }
 
-    class PT{
+    class PT extends THREE.EventDispatcher{
         constructor(bs,bl,url,$loading) {
+            super();
 
             this.bs=bs;
             this.bl=bl;
@@ -153,7 +154,6 @@ let PT=(()=>{
                     {v:19,r:new THREE.Euler( 1.9891023167129147, 0.49423785065652887, -2.7574387296667515)},
                     {v:20,r:new THREE.Euler( 0.7045497216648711, 0.6998047011253735, 0.4143115409050701)},
                 ]
-
             }
 
             this.tg=new TWEEN.Group();
@@ -165,14 +165,15 @@ let PT=(()=>{
                 a1:false,
                 a2:false,
                 life:0,
-                maxLife:1.5
+                maxLife:1.5,
+                lastD10_2:null,
             };
 
             this._load(()=>{
                 this._init();
                 pt=this;
 
-
+                this.dispatchEvent({type:"loaded",message:""});
             })
         }
 
@@ -214,6 +215,7 @@ let PT=(()=>{
         _init(){
             this._initBasic();
             this._initBackDoor();
+            //this._initPass();
         }
 
         _initBasic(){
@@ -240,7 +242,7 @@ let PT=(()=>{
             this.lg=lg;
             bs.o3d.scene.add(lg);
 
-            bs.o3d.camera.position.set(0,10,0);
+            bs.o3d.camera.position.set(0.85,10,0);
             bs.o3d.camera.rotation.set(-Math.PI/2,0,Math.PI/2);
             //bs.o3d.camera.lookAt(new THREE.Vector3());
             bs.o3d.controls.enabled=false;
@@ -266,24 +268,53 @@ let PT=(()=>{
             if(!this._getQueryVariable("bd")) return;
 
             let vd6 = this.value["D6_6"];
-            let l1=Math.ceil(vd6.length/3*1);
+            //let l1=Math.ceil(vd6.length/3*1);
+            let l1=1;
 
             for(let i=0;i<l1;i++){
                 vd6.push({v:6,r:vd6[5].r.clone()});
                 vd6.push({v:5,r:vd6[4].r.clone()});
+                vd6.push({v:4,r:vd6[3].r.clone()});
+                vd6.push({v:4,r:vd6[3].r.clone()});
             }
 
             let vd10_2=this.value["D10-0_8_2"];
-            let l2=Math.ceil(vd10_2.length/3*1);
+            //let l2=Math.ceil(vd10_2.length/3*1);
+            let l2=1;
 
             for(let i=0;i<l2;i++){
                 vd10_2.push({v:0,r:vd10_2[0].r.clone()});
                 vd10_2.push({v:1,r:vd10_2[1].r.clone()});
+                vd10_2.push({v:1,r:vd10_2[1].r.clone()});
                 vd10_2.push({v:2,r:vd10_2[2].r.clone()});
+                vd10_2.push({v:2,r:vd10_2[2].r.clone()});
+                vd10_2.push({v:2,r:vd10_2[2].r.clone()});
+                vd10_2.push({v:3,r:vd10_2[3].r.clone()});
+                vd10_2.push({v:3,r:vd10_2[3].r.clone()});
+                vd10_2.push({v:3,r:vd10_2[3].r.clone()});
             }
 
             vd6.shuffle();
             vd10_2.shuffle();
+
+            let vd20 = this.value["D20_10"];
+
+            for(let i=0;i<1;i++){
+                vd20.push({v:13,r:new THREE.Euler( -2.8119575064068703, -0.163298834393146, -1.5109467861285903)}),
+                vd20.push({v:14,r:new THREE.Euler( -1.639208916016831, -1.0376758552021008,  2.4057950143749633)}),
+                vd20.push({v:15,r:new THREE.Euler( -1.5757669854505514, -0.004329079738663087, -1.4351331190434908)}),
+                vd20.push({v:16,r:new THREE.Euler( -0.5296974786555914, -0.8848204101838439, 2.2544089876665367)}),
+                vd20.push({v:17,r:new THREE.Euler( 0.6498708185748705, 0.6154370571351979, -2.6481990707801004)}),
+                vd20.push({v:18,r:new THREE.Euler( -3.1161149791765075, -1.1792741660309884, 2.127539836634308)}),
+                vd20.push({v:19,r:new THREE.Euler( 1.9891023167129147, 0.49423785065652887, -2.7574387296667515)}),
+                vd20.push({v:20,r:new THREE.Euler( 0.7045497216648711, 0.6998047011253735, 0.4143115409050701)}),
+                    vd20.push({v:18,r:new THREE.Euler( -3.1161149791765075, -1.1792741660309884, 2.127539836634308)}),
+                    vd20.push({v:19,r:new THREE.Euler( 1.9891023167129147, 0.49423785065652887, -2.7574387296667515)}),
+                    vd20.push({v:20,r:new THREE.Euler( 0.7045497216648711, 0.6998047011253735, 0.4143115409050701)})
+                vd20.push({v:18,r:new THREE.Euler( -3.1161149791765075, -1.1792741660309884, 2.127539836634308)}),
+                    vd20.push({v:19,r:new THREE.Euler( 1.9891023167129147, 0.49423785065652887, -2.7574387296667515)}),
+                    vd20.push({v:20,r:new THREE.Euler( 0.7045497216648711, 0.6998047011253735, 0.4143115409050701)})
+            }
 
 /*            vd6.sort(()=>{
                 return 0.5-Math.random()
@@ -291,6 +322,25 @@ let PT=(()=>{
             vd10_2.sort(()=>{
                 return 0.5-Math.random()
             });*/
+        }
+
+        _initPass(){
+            let aip=new THREE.AfterimagePass();
+            aip.uniforms.damp.value=0.5;
+            //this.bs.setPass(aip);
+
+            let params = {
+                exposure: 1,
+                bloomStrength: 1.5,
+                bloomThreshold: 0,
+                bloomRadius: 0
+            };
+            let bloomPass = new THREE.UnrealBloomPass( new THREE.Vector2( bs.width, bs.height ), 1.5, 0, 0 );
+            bloomPass.threshold = params.bloomThreshold;
+            bloomPass.strength = params.bloomStrength;
+            bloomPass.radius = params.bloomRadius;
+
+            bs.addPass(bloomPass);
         }
 
         setBG(name="star1"){
@@ -412,6 +462,15 @@ let PT=(()=>{
                         let index=this.random(this.value[status.nowName].length)-1;
                         let e=this.value[status.nowName][index];
                         console.log(index);
+                        if(status.nowName=="D10-0_8_2"){
+                            status.lastD10_2=index;
+                        }
+                        //在进行了几局COC游戏后我们一致认为，用电子骰投出00大失败，这何止是愚蠢，这简直就是愚蠢
+                        if(status.nowName=="D10-0_8_1"){
+                            if(status.lastD10_2===0){
+                                index=index<5?index+1:index;
+                            }
+                        }
                         status.t = new TWEEN.Tween(status.nowObj.rotation,this.tg).to({x:e.r.x,y:e.r.y,z:e.r.z},100).start();
                         status.t.onComplete(()=>{
                             this.tg.remove(status.t);
@@ -477,9 +536,7 @@ let PT=(()=>{
         requestAnimationFrame(animate);
 
         if(pt){
-
             pt._update(time);
-
         }
 
     }
