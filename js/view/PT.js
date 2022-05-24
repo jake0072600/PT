@@ -499,7 +499,7 @@ let PT=(()=>{
             this.tg.update(time)
 
             if(this.lg)
-                this.lg.rotation.y+=0.025;
+                this.lg.rotation.y+=0.001;
 
             if(this.bg)
                 this.bg.update();

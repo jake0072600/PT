@@ -111,8 +111,8 @@
             -webkit-animation: spin11 1.5s linear 0s infinite;
         }
         .svg{
-            width: 100px;
-            height: 100px;
+            width: 100%;
+            height: 100%;
             position: relative;
         }
 
@@ -346,193 +346,104 @@
             color:#fff;
             font-size: 18px;
         }
+        .d1{
+            position: absolute;
+            left:0;top:0;
+            width: 100%;
+            height: 50%;
+            background-color: #fff;
+        }
+        .d2{
+            position: absolute;
+            left:0;bottom:0;
+            width: 100%;
+            height: 50%;
+            background-image: url("./image/bg.jpg");
+            background-repeat: repeat;
+        }
+        .d1 a,.d2 a{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top:0;
+        }
+        .d1-m{
+            height: 80px;
+            line-height: 80px;
+            width: 100%;
+            background-color: #0e8ff5;
+            text-align: center;
+            color:#fff;
+            font-size: 30px;
+            top:50%;
+            margin-top: -40px;
+            position: absolute;
+            left: 0;
+        }
+        .d2-m{
+            height: 80px;
+            line-height: 80px;
+            width: 100%;
+            text-align: center;
+            font-size: 30px;
+            top:50%;
+            margin-top: -40px;
+            position: absolute;
+            left: 0;
+        }
+        .bd{
+            position: absolute;
+            bottom:0;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            background-color: transparent;
+        }
+
+/*        .t2{
+            animation: pulse2 1;
+            animation-fill-mode:forwards;
+        }
+
+        @keyframes pulse2 {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }*/
 
     </style>
 </head>
 <body>
-    <div id="container"></div>
+    <div class="d1"><a href="jy.html">
+        <div class="d1-m">简化版</div>
+    </a></div>
+    <div class="d2"><a href="test1R.html">
+        <div class="d2-m">
+            <svg class="svg">
+                <defs>
+                    <mask class="t2" id="myMask">
+                        <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"></rect>
+                        <text x="50%" y="50%" dy=".12em" fill="#000000" style='font-size:40px;font-weight:1600;dominant-baseline:middle;text-anchor:middle;'>普通版(10M流量)</text>
+                    </mask>
+                </defs>
+                <rect  width="100%" height="100%" fill="#ffffff" mask="url(#myMask)"></rect>
+            </svg>
 
-    <div class="spinner-box">
-        <div class="solar-system">
-            <div class="earth-orbit orbit">
-                <div class="planet earth"></div>
-                <div class="venus-orbit orbit">
-                    <div class="planet venus"></div>
-                    <div class="mercury-orbit orbit">
-                        <div class="planet mercury"></div>
-                        <div class="sun"></div>
-                    </div>
-                </div>
-            </div>
         </div>
+    </a></div>
+    <a class="bd" href="test1R.html?bd=1">
+    </a>
 
-        <div class=spinner-text>0%</div>
-    </div>
-
-    <div class="d-select">
-
-        <svg class="svg">
-            <defs>
-                <mask id="myMask">
-                    <rect x="0" y="0" width="100" height="100" fill="#ffffff"></rect>
-                    <text x="50" y="52" fill="#000000" style='font-size:20px;font-weight:1600;dominant-baseline:middle;text-anchor:middle;'>D6</text>
-                </mask>
-            </defs>
-            <circle cx="50" cy="50" r="50" fill="#ffffff" mask="url(#myMask)"></circle>
-        </svg>
-
-    </div>
-    <div class="d-select-left" onclick="onLeftClick()">&larr;</div>
-    <div class="d-select-right" onclick="onRightClick()">&rarr;</div>
-    <div class="d-go" onclick="onGoClick()">
-        <svg class="svg">
-            <defs>
-                <mask id="myMask2">
-                    <rect x="0" y="0" width="100" height="100" fill="#ffffff"></rect>
-                    <text x="50" y="56" fill="#000000" style='font-size:50px;font-weight:1600;dominant-baseline:middle;text-anchor:middle;'>GO</text>
-                </mask>
-            </defs>
-            <circle cx="50" cy="50" r="50" fill="#ffffff" mask="url(#myMask2)"></circle>
-        </svg>
-    </div>
-
-<!--    <div class="d-bg" onclick="onBgClick()">
-        BG
-    </div>-->
-
-    <script src="./js/lib/inflate.min.js"></script>
-<!--    <script src="./js/lib/iscroll.js"></script>-->
     <script src="./js/lib/jquery-3.5.1.min.js"></script>
     <script src="./js/lib/jQuery.fastClick.js"></script>
-    <script src="./js/lib/three122.js"></script>
-
-    <script src="./js/lib/stats.min.js"></script>
-
-    <script src="./js/lib/loaders/GLTFLoader.js"></script>
-    <script src="./js/lib/loaders/DRACOLoader.js"></script>
-    <script src="./js/lib/loaders/OBJLoader.js"></script>
-    <script src="./js/lib/loaders/FBXLoader.js"></script>
-
-    <script src="./js/lib/postprocessing/EffectComposer.js"></script>
-    <script src="./js/lib/postprocessing/RenderPass.js"></script>
-    <script src="./js/lib/postprocessing/ShaderPass.js"></script>
-    <script src="./js/lib/shaders/LuminosityHighPassShader.js"></script>
-    <script src="./js/lib/shaders/CopyShader.js"></script>
-    <script src="./js/lib/shaders/AfterimageShader.js"></script>
-
-    <script src="./js/lib/shaders/FXAAShader.js"></script>
-    <script src="./js/lib/postprocessing/UnrealBloomPass.js"></script>
-    <script src="./js/lib/postprocessing/OutlinePass.js"></script>
-    <script src="./js/lib/postprocessing/AfterimagePass.js"></script>
-
-    <script src="./js/lib/shaders/BokehShader.js"></script>
-    <script src="./js/lib/postprocessing/BokehPass.js"></script>
-
-    <script src="./js/lib/shaders/DigitalGlitch.js"></script>
-    <script src="./js/lib/postprocessing/GlitchPass.js"></script>
-
-    <script src="./js/lib/tween/TweenMax.min.js"></script>
-    <script src="./js/lib/tween/tween.umd.js"></script>
-
-    <script src="./js/lib/objects/Water.js"></script>
-    <script src="./js/lib/objects/Sky.js"></script>
-
-    <script src="./js/lib/controls/OrbitControls.js"></script>
-    <script src="./js/basicStage.js"></script>
-    <script src="./js/basicLoader.js"></script>
-    <script src="./js/O3DMovementList.js"></script>
-    <script src="./js/basicAnimate.js"></script>
-
-    <script src="./js/atmosphere/cloud.js"></script>
-    <script src="./js/atmosphere/star.js"></script>
-    <script src="./js/atmosphere/water.js"></script>
-
-    <script src="./js/lib/ShaderFrog/shaderfrog-runtime.min.js"></script>
-
-    <script src="./js/lib/howler/howler.min.js"></script>
-
-    <script src="./js/lib/controls/TransformControls.js"></script>
-    <script src="./js/view/PT.js"></script>
 
     <script>
 
-        let $loading=$(".spinner-box");
 
-        let config=[
-            {name:"D6_6",text:"D6"},
-            {name:"D10-0_8_1",text:"D10(个)"},
-            {name:"D10-0_8_2",text:"D10(十)"},
-            {name:"D4_5",text:"D4"},
-            {name:"D8_7",text:"D8"},
-            {name:"D2_4",text:"D2"},
-            {name:"D12_9",text:"D12"},
-            {name:"D20_10",text:"D20"}
-        ]
-        let index=0;
-
-        let bgConfig=["star1","cloud","water"];
-        let bgIndex=0;
-        //let bg="star1";
-
-
-
-        let bl=new BasicLoader({options:{}});
-        let bs=new BasicStage.BasicStage({element:document.getElementById("container")});
-
-        let pt = new PT.PT(bs,bl,"./res/dice1.glb",$loading);
-
-
-        function onGoClick(){
-            pt.justDoIt();
-        }
-        function onLeftClick(){
-            if(pt.status.a1||pt.status.a2||pt.status.life) return ;
-
-            index = index-1<0?config.length-1:index-1;
-
-            let item=config[index];
-            $(".d-select text").text(item.text);
-            pt.selectD(item.name);
-        }
-        function onRightClick(){
-            if(pt.status.a1||pt.status.a2||pt.status.life) return ;
-
-            index = index+1>=config.length?0:index+1;
-
-            let item=config[index];
-            $(".d-select text").text(item.text);
-            pt.selectD(item.name);
-        }
-        function onBgClick(){
-            bgIndex=bgIndex+1>=bgConfig.length?0:bgIndex+1;
-            let bg=bgConfig[bgIndex];
-            //bg=bg=="star1"?"cloud":"star1";
-
-            pt.setBG(bg);
-        }
-
-/*        alert(window.DeviceMotionEvent);
-        if(window.DeviceMotionEvent) {
-            let speed = 25;
-            let x = 0;
-            let y=0;
-            let z=0;
-            let lastX=0;
-            let lastY=0;
-            let lastZ=0;
-            window.addEventListener('devicemotion', function(event){
-                alert(22);
-                let acceleration =event.accelerationIncludingGravity;
-                x = acceleration.x;
-                y = acceleration.y;
-                if(Math.abs(x-lastX) > speed || Math.abs(y-lastY) > speed) {
-                    //document.body.style.backgroundColor = color[Math.round(Math.random()*10)%6];
-                    alert(111);
-                }
-                lastX = x;
-                lastY = y;
-            }, false);
-        }*/
     </script>
 
 </body>
